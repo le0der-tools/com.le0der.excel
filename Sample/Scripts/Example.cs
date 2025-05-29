@@ -3,44 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Example : MonoBehaviour
+namespace Le0der.Toolkits.Excel.Demo
 {
-	[SerializeField] ExcelMstItems mstItems;
-	[SerializeField] Text text;
-
-	void Start()
+	public class Example : MonoBehaviour
 	{
-		ShowItems();
+		[SerializeField] ExcelMstItems mstItems;
+		[SerializeField] Text text;
+
+		void Start()
+		{
+			ShowItems();
+		}
+
+		void ShowItems()
+		{
+			string str = "";
+
+			mstItems.Entity
+				.ForEach(entity => str += DescribeMstItemEntity(entity) + "\n");
+
+			text.text = str;
+		}
+
+		string DescribeMstItemEntity(SheetEntityEntity entity)
+		{
+			return string.Format(
+				"{0} : {1}, {2}, {3}, {4}, {5}",
+				entity.id,
+				entity.name,
+				entity.price,
+				entity.isNotForSale,
+				entity.rate,
+				entity.category
+			);
+		}
 	}
 
-	void ShowItems()
+	public enum MstItemCategory
 	{
-		string str = "";
-
-		mstItems.Entity
-			.ForEach(entity => str += DescribeMstItemEntity(entity) + "\n");
-
-		text.text = str;
-	}
-
-	string DescribeMstItemEntity(SheetEntityEntity entity)
-	{
-		return string.Format(
-			"{0} : {1}, {2}, {3}, {4}, {5}",
-			entity.id,
-			entity.name,
-			entity.price,
-			entity.isNotForSale,
-			entity.rate,
-			entity.category
-		);
+		Red,
+		Green,
+		Blue,
 	}
 }
-
-public enum MstItemCategory
-{
-	Red,
-	Green,
-	Blue,
-}
-

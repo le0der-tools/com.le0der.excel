@@ -119,8 +119,9 @@ namespace Le0der.Toolkits.Excel
 
 		private static object CellToFieldObject(ICell cell, FieldInfo fieldInfo)
 		{
+			// 获取单元格值和数据解析类型
 			Type targetType = fieldInfo.FieldType;
-			string cellValue = cell?.ToString() ?? string.Empty; // 获取单元格的字符串值
+			string cellValue = GetCellValue(cell, fieldInfo).ToString();
 
 			try
 			{
@@ -229,36 +230,25 @@ namespace Le0der.Toolkits.Excel
 		}
 
 		// 根据excel单元格类型，将单元格值转换为对应字段类型
-		private static object CellToFieldObject(ICell cell, FieldInfo fieldInfo, bool isFormulaEvalute = false)
+		private static object GetCellValue(ICell cell, FieldInfo fieldInfo, bool isFormulaEvalute = false)
 		{
 			var type = isFormulaEvalute ? cell.CachedFormulaResultType : cell.CellType;
 
 			switch (type)
 			{
 				case CellType.String:
-					if (fieldInfo.FieldType.IsEnum)
-						return Enum.Parse(fieldInfo.FieldType, cell.StringCellValue);
-					else if (fieldInfo.FieldType == typeof(DateTime))
-						return DateTime.Parse(cell.StringCellValue);
-					else if (fieldInfo.FieldType == typeof(TimeSpan))
-						return TimeSpan.Parse(cell.StringCellValue);
-					else if (fieldInfo.FieldType == typeof(Guid))
-						return Guid.Parse(cell.StringCellValue);
-					else
-						return cell.StringCellValue;
+					return cell.StringCellValue;
 				case CellType.Boolean:
 					return cell.BooleanCellValue;
 				case CellType.Numeric:
-					return Convert.ChangeType(cell.NumericCellValue, fieldInfo.FieldType);
+					return cell.NumericCellValue;
 				case CellType.Formula:
 					if (isFormulaEvalute) return null;
-					return CellToFieldObject(cell, fieldInfo, true);
+					return GetCellValue(cell, fieldInfo, true);
+				case CellType.Blank:
+					return string.Empty;
 				default:
-					if (fieldInfo.FieldType.IsValueType)
-					{
-						return Activator.CreateInstance(fieldInfo.FieldType);
-					}
-					return null;
+					return cell.ToString(); // 其他类型回退方案
 			}
 		}
 

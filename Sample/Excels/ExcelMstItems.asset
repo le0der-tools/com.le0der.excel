@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Entity:
   - id: 1
-    name: item1-1
+    name: item1
     price: 3
     isNotForSale: 0
     rate: 2.3
