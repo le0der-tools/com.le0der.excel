@@ -22,5 +22,12 @@
     "url": "https://github.com/le0der-tools/com.le0der.excel.git"
   },
   "documentationUrl": "https://github.com/le0der-tools/com.le0der.excel.git",
-  "changelogUrl": "https://github.com/le0der-tools/com.le0der.excel/blob/main/CHANGELOG.md"
+  "changelogUrl": "https://github.com/le0der-tools/com.le0der.excel/blob/main/CHANGELOG.md",
+  "samples": [
+    {
+      "displayName": "Excel Read",
+      "description": "A basic example of using the Excel helper.",
+      "path": "Samples~/ExcelRead"
+    }
+  ]
 }
