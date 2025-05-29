@@ -1,0 +1,26 @@
+{
+  "name": "com.le0der.excel",
+  "version": "1.0.0",
+  "displayName": "Excel Tools",
+  "description": "A collection of excel implementations for Unity, including excel parsing and so on.",
+  "unity": "2022.3",
+  "author": {
+    "name": "le0der",
+    "email": "le0der@163.com",
+    "url": "https://le0der.top"
+  },
+  "dependencies": {},
+  "keywords": [
+    "excel",
+    "tools",
+    "unity"
+  ],
+  "license": "Apache-2.0",
+  "licensesUrl": "https://github.com/le0der-tools/com.le0der.excel?tab=Apache-2.0-1-ov-file",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/le0der-tools/com.le0der.excel.git"
+  },
+  "documentationUrl": "https://github.com/le0der-tools/com.le0der.excel.git",
+  "changelogUrl": "https://github.com/le0der-tools/com.le0der.excel/blob/main/CHANGELOG.md"
+}
