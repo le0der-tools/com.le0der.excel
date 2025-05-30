@@ -88,7 +88,7 @@ namespace Le0der.Toolkits.Excel
 			{
 				asset = ScriptableObject.CreateInstance(assetType.Name);
 				AssetDatabase.CreateAsset((ScriptableObject)asset, assetPath);
-				asset.hideFlags = HideFlags.NotEditable;
+				asset.hideFlags = HideFlags.None;
 			}
 
 			return asset;
