@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Le0der.Toolkits.Excel.Demo
 {
 	[Serializable]
-	public class SheetEntityEntity
+	public class SheetEntitySample
 	{
 		public int id;
 		public string name;

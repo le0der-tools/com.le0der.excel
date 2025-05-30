@@ -309,19 +309,11 @@ namespace Le0der.Toolkits.Excel
 
 		static void ImportExcel(string excelPath, ExcelAssetInfo info)
 		{
-			string assetPath = "";
+			// 确定生成Asset文件的路径
+			string folderPath = GetAssetFolderPath(excelPath, info);
 			string assetName = info.AssetType.Name + ".asset";
+			string assetPath = Path.Combine(folderPath, assetName);
 
-			if (string.IsNullOrEmpty(info.Attribute.AssetPath))
-			{
-				string basePath = Path.GetDirectoryName(excelPath);
-				assetPath = Path.Combine(basePath, assetName);
-			}
-			else
-			{
-				var path = Path.Combine("Assets", info.Attribute.AssetPath);
-				assetPath = Path.Combine(path, assetName);
-			}
 			UnityEngine.Object asset = LoadOrCreateAsset(assetPath, info.AssetType);
 
 			IWorkbook book = LoadBook(excelPath);
@@ -351,6 +343,53 @@ namespace Le0der.Toolkits.Excel
 			}
 
 			EditorUtility.SetDirty(asset);
+		}
+
+		// 获取文件夹路径地址
+		private static string GetAssetFolderPath(string excelPath, ExcelAssetInfo info)
+		{
+			string folderPath;
+
+			// 如果未对数据地址赋值生成到excel文件所在目录下
+			if (string.IsNullOrEmpty(info.Attribute.AssetPath))
+			{
+				// 默认 fallback：Excel 所在目录旁边的 ExcelDatas
+				folderPath = Path.GetDirectoryName(excelPath);
+			}
+			else
+			{
+				if (info.Attribute.IsRelative)
+				{
+					// 相对于 Excel 的路径
+					string basePath = Path.GetDirectoryName(excelPath);
+					folderPath = Path.Combine(basePath, info.Attribute.AssetPath);
+				}
+				else
+				{
+					// 相对于 Assets 的路径
+					folderPath = Path.Combine("Assets", info.Attribute.AssetPath);
+				}
+
+				// 统一转换为绝对路径并标准化格式
+				string fullFolderPath = Path.GetFullPath(folderPath)
+					.Replace('\\', '/')
+					.TrimEnd('/');
+
+				string assetsRootPath = Path.GetFullPath(Application.dataPath)
+					.Replace('\\', '/')
+					.TrimEnd('/');
+
+
+				if (!fullFolderPath.StartsWith(assetsRootPath))
+				{
+					throw new Exception($"目标路径越界：{fullFolderPath} 超出了 Assets 根目录 {assetsRootPath}。请检查 AssetPath 配置。");
+				}
+
+				// 转换成以 Assets 开头的相对路径,解决相对路径导致的错误：The asset is loaded, but not tracked. source hash=''
+				folderPath = "Assets" + fullFolderPath.Substring(assetsRootPath.Length);
+			}
+
+			return folderPath;
 		}
 
 

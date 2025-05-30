@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce10502001efad14bb0ff0feee3bfcef, type: 3}
-  m_Name: ExcelMstItems
+  m_Script: {fileID: 11500000, guid: eac993f880fc8574d8be1d98ba1100bf, type: 3}
+  m_Name: ExcelSample
   m_EditorClassIdentifier: 
-  Entity:
+  Sample:
   - id: 1
     name: item1
     price: 3
@@ -72,4 +72,65 @@ MonoBehaviour:
     price: 1010
     isNotForSale: 1
     rate: 8.05
+    category: 2
+  Sample2:
+  - id: 1
+    name: item1
+    price: 3
+    isNotForSale: 0
+    rate: 0
+    category: 0
+  - id: 2
+    name: item2
+    price: 10
+    isNotForSale: 0
+    rate: 0
+    category: 0
+  - id: 3
+    name: item3
+    price: 25
+    isNotForSale: 0
+    rate: 0
+    category: 0
+  - id: 4
+    name: item4
+    price: 60
+    isNotForSale: 1
+    rate: 0
+    category: 1
+  - id: 5
+    name: item5
+    price: 180
+    isNotForSale: 1
+    rate: 0
+    category: 1
+  - id: 6
+    name: item6
+    price: 230
+    isNotForSale: 1
+    rate: 0
+    category: 1
+  - id: 7
+    name: item7
+    price: 310
+    isNotForSale: 0
+    rate: 0
+    category: 2
+  - id: 8
+    name: item8
+    price: 560
+    isNotForSale: 1
+    rate: 0
+    category: 2
+  - id: 9
+    name: item9
+    price: 820
+    isNotForSale: 0
+    rate: 0
+    category: 2
+  - id: 10
+    name: item10
+    price: 1010
+    isNotForSale: 1
+    rate: 0
     category: 2
