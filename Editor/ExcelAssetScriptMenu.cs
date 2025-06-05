@@ -25,8 +25,7 @@ namespace Le0der.Toolkits.Excel
 		/// <summary>
 		/// 根据excel表格创建对应的数据代码
 		/// </summary>
-		[MenuItem("Assets/Create/ExcelAssetScript", false)]
-		static void CreateScript()
+		public static void CreateScript()
 		{
 			// 保存路径
 			string savePath = EditorUtility.SaveFolderPanel("Save ExcelAssetScript", Application.dataPath, "");
@@ -90,11 +89,26 @@ namespace Le0der.Toolkits.Excel
 		static List<ISheet> GetSheets(string excelPath)
 		{
 			var sheets = new List<ISheet>();
-			using (FileStream stream = File.Open(excelPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+			using (FileStream stream = File.Open(excelPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite | FileShare.Delete))
 			{
 				IWorkbook book = null;
-				if (Path.GetExtension(excelPath) == ".xls") book = new HSSFWorkbook(stream);
-				else book = new XSSFWorkbook(stream);
+				try
+				{
+					if (Path.GetExtension(excelPath).ToLower() == ".xls")
+						book = new HSSFWorkbook(stream);
+					else if (IsValidXlsxFile(excelPath))
+						book = new XSSFWorkbook(stream);
+					else
+					{
+						Debug.LogError($"Excel 文件格式不正确或损坏：{excelPath}");
+						return new List<ISheet>();
+					}
+				}
+				catch (Exception ex)
+				{
+					Debug.LogError($"读取 Excel 文件失败：{excelPath}\n{ex.GetType().Name}: {ex.Message}");
+					throw;
+				}
 
 				for (int i = 0; i < book.NumberOfSheets; i++)
 				{
@@ -103,6 +117,24 @@ namespace Le0der.Toolkits.Excel
 				}
 			}
 			return sheets;
+		}
+
+		private static bool IsValidXlsxFile(string filePath)
+		{
+			try
+			{
+				using (FileStream fs = File.OpenRead(filePath))
+				{
+					byte[] header = new byte[2];
+					int read = fs.Read(header, 0, 2);
+					return read == 2 && header[0] == (byte)'P' && header[1] == (byte)'K';
+				}
+			}
+			catch (Exception ex)
+			{
+				Debug.LogError($"检查文件头失败：{ex.Message}");
+				return false;
+			}
 		}
 
 		/// <summary>

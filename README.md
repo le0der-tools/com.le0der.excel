@@ -48,7 +48,6 @@ https://github.com/le0der-tools/com.le0der.excel.git
 ```json
 "com.le0der.excel": "https://github.com/le0der-tools/com.le0der.excel.git"
 ```
-
 ---
 
 ## 📘 使用说明：Unity Excel 读取工具
@@ -75,8 +74,42 @@ https://github.com/le0der-tools/com.le0der.excel.git
     <font color='#FF0000'>**禁止在前两行（字段名和字段类型）使用注释行**，否则将导致生成异常。</font>
     ![Excel结构示例](Documentation~/images/excel_sample.jpg)
 
+### 🛠 使用步骤（V 1.0.2版本及以上版本）
 
-### 🛠 使用步骤
+🚨 自 v1.2 起，右键菜单操作已弃用，所有功能已迁移至顶部菜单栏 `Le0der Toolkits` 中。
+ 🧭 菜单路径：`Le0der Toolkits → Excel`
+
+1️⃣ 生成数据类脚本
+
+1. 在 Project 窗口中选中Excel文件（`.xlsx` 或 `.xls`）。
+
+2. 在顶部菜单栏点击：
+
+   ```nginx
+   Le0der Toolkits → Excel → 生成数据代码
+   ```
+
+3. 弹出的文件夹选择框中，选择生成 C# 脚本的保存路径（建议为 `ExcelScripts` 文件夹）。
+
+   ![选择文件](Documentation~/images/create_scripts_floder.jpg)
+
+4. 工具将自动为 Excel 文件和文件中的每个Sheet生成对应的脚本：
+
+    生成代码请见下方 “代码生成说明”。
+#### 2️⃣ 生成 ScriptableObject 数据文件
+
+1. 在 Project 窗口中选中Excel文件（`.xlsx` 或 `.xls`）。
+
+2. 在顶部菜单栏点击：
+
+   ```nginx
+   Le0der Toolkits → Excel → 重新导入选中表格
+   ```
+
+3. 工具会在 `[ExcelAsset]` 指定或默认路径中自动生成对应的 ScriptableObject 数据文件。
+
+### 🛠 使用步骤（V 1.0.1版本及以前）
+
 #### 1️⃣ 生成数据类脚本
 1. 在 Project 窗口中，右键点击 Excel 文件，选择 **Create -> ExcelAssetScript**。
 
@@ -88,6 +121,20 @@ https://github.com/le0der-tools/com.le0der.excel.git
 
 3. 工具将自动为 Excel 文件和文件中的每个Sheet生成对应的脚本：
 
+    生成代码请见下方 “代码生成说明”。
+
+#### 2️⃣ 生成 ScriptableObject 数据文件
+
+1. 再次右键点击 Excel 文件。
+
+2. 选择 ReImport。
+   ![重新导入](Documentation~/images/excel_reimport.jpg)
+
+3. 工具会自动在 指定 文件夹中生成对应的 ScriptableObject 数据文件。
+   ![文件展示](Documentation~/images/obj_show.png)
+   
+
+### ✏️ 代码生成说明
    ​	📌 表格代码生成规则
 
    - 表格类脚本文件 `Excel<表格名称>.cs`
@@ -112,7 +159,7 @@ https://github.com/le0der-tools/com.le0der.excel.git
      public <字段类型> <字段名>;
      ```
 
-4. 自定义 Attribute参数控制ScriptableObject 数据生成
+1. 自定义 Attribute参数控制ScriptableObject 数据生成
 
    ​	`ExcelAssetAttribute` 是本工具中用于标记 Excel 数据类（ScriptableObject）的自定义特性。它负责告诉工具如何关联 Excel 表格、生成的 ScriptableObject 应该保存在哪，以及是否记录导入日志。
 
@@ -203,13 +250,3 @@ https://github.com/le0der-tools/com.le0der.excel.git
       ```c#
       [ExcelAsset(ExcelName = "ItemData", AssetPath = "ExcelDatas", IsRelative = false, LogOnImport = true)]
       ```
-
-#### 2️⃣ 生成 ScriptableObject 数据文件
-
-1. 再次右键点击 Excel 文件。
-
-2. 选择 ReImport。
-   ![重新导入](Documentation~/images/excel_reimport.jpg)
-
-3. 工具会自动在 指定 文件夹中生成对应的 ScriptableObject 数据文件。
-   ![文件展示](Documentation~/images/obj_show.png)
