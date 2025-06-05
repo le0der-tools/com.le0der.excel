@@ -1,6 +1,6 @@
 {
   "name": "com.le0der.excel",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "displayName": "Excel Tools",
   "description": "A collection of excel implementations for Unity, including excel parsing and so on.",
   "unity": "2022.3",
